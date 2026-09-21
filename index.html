@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Tech Day PwC Marseille 2026</title>
+<style>
+  :root{
+    --pwc-orange:#e0301e;
+    --pwc-dark:#2d2d2d;
+    --pwc-grey:#f4f4f4;
+    --pwc-gold:#eb8c00;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--pwc-grey);
+    color:var(--pwc-dark);
+    line-height:1.5;
+    padding-bottom:40px;
+  }
+  header{
+    background:linear-gradient(135deg,var(--pwc-orange),var(--pwc-gold));
+    color:#fff;
+    padding:30px 20px;
+    text-align:center;
+    position:relative;
+  }
+  header h1{
+    font-size:clamp(24px,5vw,42px);
+    margin-bottom:10px;
+    letter-spacing:1px;
+  }
+  header .infos{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:15px;
+    margin-top:15px;
+    font-size:clamp(14px,3vw,18px);
+    font-weight:600;
+  }
+  header .infos span{
+    background:rgba(255,255,255,0.2);
+    padding:8px 16px;
+    border-radius:20px;
+    backdrop-filter:blur(4px);
+  }
+  nav{
+    background:var(--pwc-dark);
+    padding:10px;
+    text-align:center;
+  }
+  nav a{
+    color:#fff;
+    text-decoration:none;
+    margin:0 12px;
+    font-weight:600;
+    font-size:14px;
+  }
+  main{
+    max-width:1000px;
+    margin:0 auto;
+    padding:20px 15px;
+  }
+  section{
+    background:#fff;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  h2{
+    color:var(--pwc-orange);
+    border-bottom:3px solid var(--pwc-orange);
+    padding-bottom:8px;
+    margin-bottom:18px;
+    font-size:clamp(20px,4vw,28px);
+  }
+  .timeline-item{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+  }
+  .timeline-item:last-child{border-bottom:none;}
+  .time{
+    background:var(--pwc-orange);
+    color:#fff;
+    font-weight:700;
+    padding:8px 12px;
+    border-radius:8px;
+    min-width:130px;
+    text-align:center;
+    height:fit-content;
+    font-size:14px;
+  }
+  .content{flex:1;min-width:200px;}
+  .content h3{
+    color:var(--pwc-dark);
+    margin-bottom:6px;
+    font-size:clamp(16px,3.5vw,19px);
+  }
+  .content p{
+    font-size:14px;
+    color:#555;
+    margin-bottom:4px;
+  }
+  .corners-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:15px;
+    margin-top:15px;
+  }
+  .corner-card{
+    background:var(--pwc-grey);
+    border-left:5px solid var(--pwc-gold);
+    border-radius:8px;
+    padding:15px;
+  }
+  .corner-card h4{
+    color:var(--pwc-orange);
+    margin-bottom:8px;
+    font-size:15px;
+  }
+  .corner-card p{
+    font-size:13px;
+    color:#444;
+  }
+  .schedule-corners{
+    background:var(--pwc-orange);
+    color:#fff;
+    padding:10px 15px;
+    border-radius:8px;
+    text-align:center;
+    font-weight:600;
+    margin-top:15px;
+    font-size:14px;
+  }
+
+  /* MODALS */
+  .modal-overlay{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:15px;
+  }
+  .modal-box{
+    background:#fff;
+    border-radius:14px;
+    max-width:450px;
+    width:100%;
+    padding:25px;
+    position:relative;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    animation:popIn 0.3s ease;
+  }
+  @keyframes popIn{
+    from{transform:scale(0.8);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+  }
+  .modal-box h3{
+    color:var(--pwc-orange);
+    margin-bottom:15px;
+    font-size:20px;
+  }
+  .modal-box p{
+    margin-bottom:12px;
+    font-size:15px;
+    color:#333;
+  }
+  .modal-close{
+    position:absolute;
+    top:12px;right:15px;
+    background:none;
+    border:none;
+    font-size:22px;
+    cursor:pointer;
+    color:#999;
+  }
+  .modal-btn{
+    background:var(--pwc-orange);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    margin-top:10px;
+    width:100%;
+    font-size:15px;
+  }
+  .modal-icon{
+    font-size:36px;
+    text-align:center;
+    margin-bottom:10px;
+  }
+
+  footer{
+    text-align:center;
+    padding:20px;
+    color:#777;
+    font-size:13px;
+  }
+
+  @media(max-width:600px){
+    .timeline-item{flex-direction:column;}
+    .time{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚀 Tech Day PwC 2026</h1>
+  <div class="infos">
+    <span>📍 Marseille</span>
+    <span>📅 Mardi 29 septembre 2026</span>
+    <span>⏰ 8h45 - 14h00</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#programme">Programme</a>
+  <a href="#corners">Corners</a>
+</nav>
+
+<main>
+
+  <section id="programme">
+    <h2>📋 Programme de la journée</h2>
+
+    <div class="timeline-item">
+      <div class="time">8h45 - 9h15</div>
+      <div class="content">
+        <h3>☕ Accueil café</h3>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">9h15 - 9h45</div>
+      <div class="content">
+        <h3>🎤 Introduction & Keynote d'ouverture</h3>
+        <p><strong>PwC Digest VivaTech :</strong> que faut-il retenir des tendances tech 2026 ?</p>
+        <p>Par <strong>Marie Sophie Maysonnial</strong>, PwC experte AI & Innovation</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">9h45 - 10h30</div>
+      <div class="content">
+        <h3>🗣️ Table ronde et témoignages clients</h3>
+        <p><strong>Industrialisation de l'IA</strong> avec deux intervenants :</p>
+        <p>1. <strong>CMA CGM :</strong> Julien Smadja, Vice President - AI - CMA CGM</p>
+        <p>2. <strong>Microsoft PwC :</strong> Emmanuel Saffache, Leader Microsoft chez PwC</p>
+      </div>
+    </div>
+
+    <div class="timeline-item" id="corners">
+      <div class="time">10h30 - 12h15</div>
+      <div class="content">
+        <h3>💡 Démonstrations interactives de cas d'usages IA</h3>
+
+        <div class="corners-grid">
+          <div class="corner-card">
+            <h4>Corner 1 | SAP</h4>
+            <p>Découvrez l'entreprise autonome avec Joule, le copilote d'IA générative de SAP et l'Agentic AI au cœur de SAP Cloud ERP.</p>
+            <p><em>Animé par :</em> Wilfrid Real (Principal Architect - Directeur, PwC), Nicolas Perrier (Manager, SAP), Eva Stephan (Account Executive, SAP)</p>
+          </div>
+
+          <div class="corner-card">
+            <h4>Corner 2 | Microsoft</h4>
+            <p>Bénéficiez de démonstrations live Microsoft présentant des solutions concrètes déployées en environnement professionnel.</p>
+            <p><em>Animé par :</em> Thibault Coutarel (Account Executive Copilot, Microsoft), Emmanuel Saffache (Leader Microsoft, PwC)</p>
+          </div>
+
+          <div class="corner-card">
+            <h4>Corner 3 | Mentalista</h4>
+            <p>Plongez dans l'univers de la neurotechnologie et découvrez comment analyser les émotions et réactions face à un stimulus, une expérience sensorielle unique.</p>
+            <p><em>Animé par :</em> Alpha Traoré, Chef de projet Innovation, PwC</p>
+          </div>
+
+          <div class="corner-card">
+            <h4>Corner 4 | Beink Dream</h4>
+            <p>Donnez vie à vos idées ! Concevez vos concepts et visualisez-les en réalité virtuelle dans un environnement immersif.</p>
+            <p><em>Animé par :</em> Nicolas Ang, Expert PwC</p>
+          </div>
+
+          <div class="corner-card">
+            <h4>Corner 5 | Workforce x AI</h4>
+            <p>Découvrez les dernières innovations Vivatech relatives à la conduite du changement, avec notamment une démo de la start-up Virtual Speech.</p>
+            <p><em>Animé par :</em> Florent Antelme (Managing Director Advisory Workforce, PwC), Marion Barthel (Manager Advisory Workforce, PwC), Wajih Badane (Consultant senior conduite du changement, PwC), Victoire Trancart (Consultante senior conduite du changement, PwC)</p>
+          </div>
+
+          <div class="corner-card">
+            <h4>Corner 6 | BSE TLS</h4>
+            <p>Explorez différents cas d'usage avec notre experte Tax et juridique.</p>
+            <p><em>Animé par :</em> Emmanuelle Veras (Tax Partner, PwC Société d'Avocats), Marvin Bourgelas (Senior Manager Transformation Technology & Innovation for Tax, PwC Société d'Avocats), Lambert Demma (Chef de Projet Innovation & Transformation for Tax, PwC Société d'Avocats), Anne Claire Revirard (Avocate fiscaliste, PwC)</p>
+          </div>
+        </div>
+
+        <div class="schedule-corners">
+          ⏱️ Horaires des corners : 10h30-11h &nbsp;|&nbsp; 11h10-11h40 &nbsp;|&nbsp; 11h50-12h15
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="time">12h15 - 14h00</div>
+      <div class="content">
+        <h3>🥂 Cocktail déjeunatoire et networking</h3>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 PwC Tech Day - Marseille
+</footer>
+
+<!-- MODAL 1 : Satisfaction -->
+<div class="modal-overlay" id="modal1">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal1')">×</button>
+    <div class="modal-icon">📩</div>
+    <h3>Questionnaire de satisfaction</h3>
+    <p>Merci de votre présence au Tech Day PwC Marseille !</p>
+    <p>Un <strong>questionnaire de satisfaction</strong> vous sera envoyé <strong>le lendemain de l'événement</strong>, afin de recueillir votre retour sur cette journée.</p>
+    <button class="modal-btn" onclick="closeModal('modal1')">J'ai compris</button>
+  </div>
+</div>
+
+<!-- MODAL 2 : Cocktail -->
+<div class="modal-overlay" id="modal2" style="display:none;">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal2')">×</button>
+    <div class="modal-icon">🥂</div>
+    <h3>Cocktail networking</h3>
+    <p>N'oubliez pas ! Le <strong>cocktail déjeunatoire</strong> débutera à <strong>12h15</strong>.</p>
+    <p>Venez échanger avec les intervenants et participants dans une ambiance conviviale.</p>
+    <button class="modal-btn" onclick="closeModal('modal2')">Fermer</button>
+  </div>
+</div>
+
+<script>
+  function closeModal(id){
+    document.getElementById(id).style.display='none';
+    // affiche le modal 2 après fermeture du modal 1
+    if(id==='modal1'){
+      document.getElementById('modal2').style.display='flex';
+    }
+  }
+
+  // Vérifie si on est le jour de l'événement (29 septembre 2026)
+  window.onload = function(){
+    const today = new Date();
+    const eventDate = new Date(2026, 8, 29); // mois 8 = septembre (0-indexé)
+
+    const isEventDay = today.getFullYear()===eventDate.getFullYear() &&
+                        today.getMonth()===eventDate.getMonth() &&
+                        today.getDate()===eventDate.getDate();
+
+    if(isEventDay){
+      document.getElementById('modal1').style.display='flex';
+    } else {
+      // Si ce n'est pas le jour J, on n'affiche pas le popup satisfaction
+      // mais on affiche directement le popup cocktail (optionnel selon besoin)
+      document.getElementById('modal1').style.display='none';
+      document.getElementById('modal2').style.display='none';
+    }
+  };
+</script>
+
+</body>
+</html>
